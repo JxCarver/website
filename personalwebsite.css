@@ -380,7 +380,13 @@ footer a:focus {
     }
 }
 
+a {
+    color: #0077cc;
+}
 
+a:hover {
+    color: #005fa3;
+}
 
 html,
 body {
