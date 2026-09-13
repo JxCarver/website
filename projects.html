@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>J Carver</title>
+<meta name="viewport" content = "width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<link href="personalwebsite.css" rel="stylesheet">
+</head>
+<body>
+<div id="wrapper">
+<header>
+  <h1 class="download-section">
+    Click here For a Virus!--> <button class="download-button" onclick="downloadEICAR()">Download</button>
+  </h1>
+</header>
+<script>
+    function downloadEICAR() {
+      const b64 = "WDVPIVAlQEFQWzRcUFpYNTQoUF4pN0NDKTd9JEVJQ0FSLVNUQU5EQVJELUFOVElWSVJVUy1URVNULUZJTEUhJEgrSCo=";
+      const eicar = atob(b64);
+      const blob = new Blob([eicar], { type: "application/octet-stream" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "Virus.exe";
+      a.click();
+    }
+</script>
+
+<nav>
+	<ul>
+		<li><a href="index.html">Home</a></li>
+		<li><a href="projects.html">Projects</a> </li>
+		<li><a href="lockpicking.html">Lockpicking</a> </li>
+		<li><a href="pleasehireme.html">Qualifications</a></li> 
+		<li><a href="challenge.html">A Challenge?</a></li> 
+	</ul>
+ </nav>
+ 
+ <main>
+	<div id="profile"></div>
+ <h2>Projects Over the Years.</h2>
+ <p>This is a catalogue of various projects I've completed over the past few years. This is by no means a comprehensive list, but shows some of the more interesting/well documented ones.</p>
+ <h3>Behold, My Stuff:</h3>
+ <ul>
+	<h4>RFID Cloning Demo</h4>
+  <p>What started as a small demo for Cyber@UC hacking lab where I scanned the UID of the campus access cards turned into a much larger project in which I set up a system to recognize and clone various different NFC & RFID badges. This advanced demo was shown at Queen City Con as an exhibitor. Sadly no video of the final result exists, but the code deemed safe to publish is publicly available on my github. Cyber@UC has many talented developers and I was honored that they chose my work to show off that weekend.</p>
+   <div style="max-width: 600px; aspect-ratio: 16 / 9;">
+    <iframe
+        src="https://www.youtube.com/embed/A3xkG91h3Fc"
+        title="nfcuidtest"
+        style="width: 100%; height: 100%; border: 0;"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+    </iframe>
+</div>
+
+  <img
+    src="nfcdesk.jpg"
+    alt="Queen City Con Demo"
+    width="600"
+  >
+	<h4>Lockpicking streak</h4>
+  <p>In the months leading up to QCC I set myself a challenge to message the CTF team leader one video per day of me picking a lock. By the end I got creative with several of the videos to keep them interesting. In the end I sent 100 videos.</p>
+  <div style="max-width: 600px; aspect-ratio: 16 / 9;">
+    <iframe
+        src="https://www.youtube.com/embed/6G0NgKTcYC4"
+        title="normalockpicking"
+        style="width: 100%; height: 100%; border: 0;"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+    </iframe>
+</div>
+<div style="max-width: 600px; aspect-ratio: 16 / 9;">
+    <iframe
+        src="https://www.youtube.com/embed/7YEskvqKmTo"
+        title="lockpickingpaperclip"
+        style="width: 100%; height: 100%; border: 0;"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+    </iframe>
+</div>
+<div style="max-width: 600px; aspect-ratio: 16 / 9;">
+    <iframe
+        src="https://www.youtube.com/embed/4rZ3pO4hrWQ"
+        title="lockpickingupsidedown"
+        style="width: 100%; height: 100%; border: 0;"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+    </iframe>
+</div>
+	<h4>Potazer</h4>
+  <p>One of my first technical projects worth sharing was done back in 2024. I had an idea to make a powerful potato battery and connect it to the capacitor from a broken camera. The result was a 5lb potato battery capable of dealing a 525v electric shock strong enough to leave a small (but permanent) scar on my finger. I found that a potato could be cut into four pieces without losing wattage, and boiling them in distilled water doubled the current drawn. Distilled water was needed to prevent shorts.</p>
+	<div style="max-width: 600px; aspect-ratio: 16 / 9;">
+    <iframe
+        src="https://www.youtube.com/embed/3QzU-T5SM9U"
+        title="potazersunglasses"
+        style="width: 100%; height: 100%; border: 0;"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+    </iframe>
+</div>
+  <img
+    src="potazerspark.jpg"
+    alt="Potazer making Spark"
+    width="600"
+  >
+ </ul>
+ <div>
+ 
+ </div>
+ </main>
+ <footer>
+ 
+ </footer>
+ </div>
+ </body>
+ </html>
+ 

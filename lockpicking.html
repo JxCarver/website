@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>J Carver</title>
+<meta name="viewport" content = "width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<link href="personalwebsite.css" rel="stylesheet">
+</head>
+<body>
+<div id="wrapper">
+<header>
+  <h1 class="download-section">
+    Click here For a Virus!--> <button class="download-button" onclick="downloadEICAR()">Download</button>
+  </h1>
+</header>
+<script>
+    function downloadEICAR() {
+      const b64 = "WDVPIVAlQEFQWzRcUFpYNTQoUF4pN0NDKTd9JEVJQ0FSLVNUQU5EQVJELUFOVElWSVJVUy1URVNULUZJTEUhJEgrSCo=";
+      const eicar = atob(b64);
+      const blob = new Blob([eicar], { type: "application/octet-stream" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "Virus.exe";
+      a.click();
+    }
+</script>
+<nav>
+	<ul>
+		<li><a href="index.html">Home</a></li>
+		<li><a href="projects.html">Projects</a> </li>
+		<li><a href="lockpicking.html">Lockpicking</a> </li>
+		<li><a href="pleasehireme.html">Qualifications</a></li> 
+		<li><a href="challenge.html">A Challenge?</a></li> 
+	</ul>
+ </nav>
+ 
+ <main>
+  <div id="profile"></div>
+ <h2>Lockpicking.</h2>
+ <p>Lockpicking is among my oldest hobbies. You can find here both the easiest and hardest locks I've picked over the years.</p>
+ <h3>Mad Minute:</h3>
+ <p>Ten padlocks in one minute. This was a challenge. In practice I found that most of the time was spent putting the tools in the locks, so I allowed myself to begin the challenge with tension tools already placed</p>
+ <div style="max-width: 600px; aspect-ratio: 16 / 9;">
+    <iframe
+        src="https://www.youtube.com/embed/MpX8Q0XMMMs"
+        title="Mad Minute"
+        style="width: 100%; height: 100%; border: 0;"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+    </iframe>
+</div>
+ <h3>Wall of Shame:</h3>
+ <ul>
+	<h4>Masterlock 141 DLF - 1/10</h4>
+  <p>One of the most common padlocks used indoors, this lock is easy to rake, easy to zip, and even vulnerable to overlift attacks. Since it also has a distinctive appearance anyone with even beginner level experience can spot these in the wild and open them with a comb.</p>
+   <div style="max-width: 600px; aspect-ratio: 16 / 9;">
+    <iframe
+        src="https://www.youtube.com/embed/Kb62fpuRlo8"
+        title="141 DLF"
+        style="width: 100%; height: 100%; border: 0;"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+    </iframe>
+</div>
+<h4>Walgreens Padlock - 1/10</h4>
+<p>Possibly the lowest quality lock on this list. Not only are they easy to rake, but several I bought use the same key!</p>
+<div style="max-width: 600px; aspect-ratio: 16 / 9;">
+    <iframe
+        src="https://www.youtube.com/embed/BkGazYRCvo0"
+        title="Cheap Walgreens Lock"
+        style="width: 100%; height: 100%; border: 0;"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+    </iframe>
+	<iframe
+        src="https://www.youtube.com/embed/N8jdKeOa3dw"
+        title="Keyed Alike"
+        style="width: 100%; height: 100%; border: 0;"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+    </iframe>
+</div>
+<h4>Masterlock 500D - 3/10</h4>
+<p>Cheaply made warded lock. Avoids a 1/10 rating by requiring a different tool.</p>
+<div style="max-width: 600px; aspect-ratio: 16 / 9;">
+    <iframe
+        src="https://www.youtube.com/embed/jjtqpnSFMhE?muted=1"
+        title="Masterlock 500D"
+        style="width: 100%; height: 100%; border: 0;"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+    </iframe>
+</div>
+<h4>CVS Luggage Lock - 0/10</h4>
+<p>I do not consider this a lock. Lacking a shackle catch, it can be opened by simply pulling.</p>
+<div style="max-width: 600px; aspect-ratio: 16 / 9;">
+    <iframe
+        src="https://www.youtube.com/embed/nG_tpnTKMzc"
+        title="Absolute Failure"
+        style="width: 100%; height: 100%; border: 0;"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+    </iframe>
+</div>
+ </ul>
+ </main>
+ <footer>
+ 
+ </footer>
+ </div>
+ </body>
+ </html>
+ 
