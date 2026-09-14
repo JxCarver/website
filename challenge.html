@@ -132,10 +132,15 @@ async function login() {
   }
 }
 async function verifyCode() {
-  const code =
-    document.getElementById("code").value;
-  document.getElementById("msg").textContent =
-    "Checking...";
+  const code = document.getElementById("code").value.trim();
+
+  if (!code) {
+    document.getElementById("msg").textContent = "Enter the 2FA code.";
+    return;
+  }
+
+  document.getElementById("msg").textContent = "Checking...";
+
   try {
     const res = await fetch(
       "https://hashcheck.jamesxcarver.workers.dev/",
@@ -150,34 +155,82 @@ async function verifyCode() {
         })
       }
     );
-    const data = await res.json();
-    if (data.success) {
 
-      document.getElementById("twofa").style.display =
-        "none";
-      document.getElementById("nameEntry").style.display =
-        "block";
-      document.getElementById("msg").textContent =
-        "Success!";
+    const data = await res.json();
+
+    if (data.success) {
+      // Store the verified code locally for the solve request.
+      localStorage.setItem("challenge_2fa_code", code);
+
+      document.getElementById("twofa").style.display = "none";
+      document.getElementById("nameEntry").style.display = "block";
+      document.getElementById("msg").textContent = "Success!";
     } else {
       document.getElementById("msg").textContent =
-        data.message;
+        data.message || "Invalid 2FA code.";
     }
   } catch (error) {
     console.error(error);
-    document.getElementById("msg").textContent =
-      "Connection error.";
+    document.getElementById("msg").textContent = "Connection error.";
   }
 }
+
 async function submitScore() {
-  const name =
-    document.getElementById("playerName").value.trim();
+  const name = document.getElementById("playerName").value.trim();
+
   if (!name) {
     document.getElementById("msg").textContent =
       "You have won! Please enter a name for the leaderboard.";
-
     return;
   }
+
+  const twofaCode = localStorage.getItem("challenge_2fa_code");
+
+  if (!twofaCode) {
+    document.getElementById("msg").textContent =
+      "2FA verification is required.";
+    return;
+  }
+
+  document.getElementById("msg").textContent = "Submitting...";
+
+  try {
+    const res = await fetch(
+      "https://hashcheck.jamesxcarver.workers.dev/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          type: "solve",
+          name: name,
+          code: twofaCode
+        })
+      }
+    );
+
+    const data = await res.json();
+
+    if (data.success) {
+      // No longer needed after successful submission.
+      localStorage.removeItem("challenge_2fa_code");
+
+      document.getElementById("nameEntry").style.display = "none";
+      document.getElementById("msg").textContent =
+        "Challenge completed! You're on the leaderboard.";
+
+      loadLeaderboard();
+    } else {
+      document.getElementById("msg").textContent =
+        data.message || "Could not submit score.";
+    }
+  } catch (error) {
+    console.error(error);
+    document.getElementById("msg").textContent = "Connection error.";
+  }
+}
+
   document.getElementById("msg").textContent =
     "Submitting...";
   try {
