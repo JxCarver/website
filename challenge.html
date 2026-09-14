@@ -1,31 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>J Carver</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta charset="utf-8">
-<link href="personalwebsite.css" rel="stylesheet">
+  <title>J Carver</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <link href="personalwebsite.css" rel="stylesheet">
 </head>
+
 <body>
 <div id="wrapper">
+
 <header>
   <h1 class="download-section">
     Click here For a Virus!-->
     <button class="download-button" onclick="downloadEICAR()">Download</button>
   </h1>
 </header>
+
 <script>
 function downloadEICAR() {
-  const b64 = "WDVPIVAlQEFQWzRcUFpYNTQoUF4pN0NDKTd9JEVJQ0FSLVNUQU5EQVJELUFOVElWSVJVUy1URVNULUZJTEUhJEgrSCo=";
-  const eicar = atob(b64);
-  const blob = new Blob([eicar], { type: "application/octet-stream" });
-  const a = document.createElement("a");
+  const b64 =
+    "WDVPIVAlQEFQWzRcUFpYNTQoUF4pN0NDKTd9JEVJQ0FSLVNUQU5EQVJELUFOVElWSVJVUy1URVNULUZJTEUhJEgrUCo=";
 
+  const eicar = atob(b64);
+  const blob = new Blob(
+    [eicar],
+    { type: "application/octet-stream" }
+  );
+
+  const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
   a.download = "Virus.txt";
   a.click();
+
+  URL.revokeObjectURL(a.href);
 }
 </script>
+
 <nav>
   <ul>
     <li><a href="index.html">Home</a></li>
@@ -35,14 +46,18 @@ function downloadEICAR() {
     <li><a href="challenge.html">A Challenge?</a></li>
   </ul>
 </nav>
+
 <main>
   <div>
     <h2>A Challenger Approaches</h2>
+
     <p>
       I present to you a hacking challenge.
       There is no reward for completion other than personal glory.
     </p>
+
     <h3>Do you accept this challenge?</h3>
+
     <!-- ACCEPT BUTTON -->
     <button
       class="accept-button"
@@ -54,54 +69,78 @@ function downloadEICAR() {
     >
       Accept
     </button>
+
+    <!-- PASSWORD LOGIN -->
     <div id="login" style="display:none;">
       <input
         type="password"
         id="password"
         placeholder="Password"
       >
+
       <button onclick="login()">Login</button>
     </div>
+
+    <!-- 2FA -->
     <div id="twofa" style="display:none;">
       <input
         type="text"
         id="code"
         placeholder="2FA Code"
+        autocomplete="one-time-code"
       >
+
       <button onclick="verifyCode()">Verify</button>
     </div>
+
+    <!-- NAME ENTRY -->
     <div id="nameEntry" style="display:none;">
-      <p>Challenge complete! Enter your name for the leaderboard.</p>
+      <p>
+        Challenge complete! Enter your name for the leaderboard.
+      </p>
+
       <input
         type="text"
         id="playerName"
         placeholder="Your name"
         maxlength="30"
       >
+
       <button onclick="submitScore()">Submit</button>
     </div>
+
     <p id="msg"></p>
   </div>
+
+  <!-- LEADERBOARD -->
   <div id="leaderboard-section">
     <h2>Leaderboard</h2>
+
     <ol id="leaderboard">
       <li>Loading...</li>
     </ol>
   </div>
 </main>
+
 <footer>
 </footer>
+
 <script>
 async function login() {
   const password =
     document.getElementById("password").value + "$4lt";
+
   const hashBuffer = await crypto.subtle.digest(
     "SHA-256",
     new TextEncoder().encode(password)
   );
+
   const hash = Array.from(new Uint8Array(hashBuffer))
     .map(b => b.toString(16).padStart(2, "0"))
     .join("");
+
+  document.getElementById("msg").textContent = "Checking...";
+
   try {
     const res = await fetch(
       "https://hashcheck.jamesxcarver.workers.dev/",
@@ -116,30 +155,40 @@ async function login() {
         })
       }
     );
+
     const data = await res.json();
+
     if (data.success) {
       document.getElementById("login").style.display = "none";
       document.getElementById("twofa").style.display = "block";
       document.getElementById("msg").textContent = "";
     } else {
       document.getElementById("msg").textContent =
-        data.message;
+        data.message || "Incorrect password.";
     }
+
   } catch (error) {
     console.error(error);
+
     document.getElementById("msg").textContent =
       "Connection error.";
   }
 }
+
+
 async function verifyCode() {
-  const code = document.getElementById("code").value.trim();
+  const code =
+    document.getElementById("code").value.trim();
 
   if (!code) {
-    document.getElementById("msg").textContent = "Enter the 2FA code.";
+    document.getElementById("msg").textContent =
+      "Enter the 2FA code.";
+
     return;
   }
 
-  document.getElementById("msg").textContent = "Checking...";
+  document.getElementById("msg").textContent =
+    "Checking...";
 
   try {
     const res = await fetch(
@@ -159,40 +208,66 @@ async function verifyCode() {
     const data = await res.json();
 
     if (data.success) {
-      // Store the verified code locally for the solve request.
-      localStorage.setItem("challenge_2fa_code", code);
 
-      document.getElementById("twofa").style.display = "none";
-      document.getElementById("nameEntry").style.display = "block";
-      document.getElementById("msg").textContent = "Success!";
+      /*
+       * Keep the successfully verified 2FA code locally.
+       * submitScore() will retrieve it when submitting
+       * the completed challenge.
+       */
+      localStorage.setItem(
+        "challenge_2fa_code",
+        code
+      );
+
+      document.getElementById("twofa").style.display =
+        "none";
+
+      document.getElementById("nameEntry").style.display =
+        "block";
+
+      document.getElementById("msg").textContent =
+        "Success!";
+
     } else {
       document.getElementById("msg").textContent =
         data.message || "Invalid 2FA code.";
     }
+
   } catch (error) {
     console.error(error);
-    document.getElementById("msg").textContent = "Connection error.";
+
+    document.getElementById("msg").textContent =
+      "Connection error.";
   }
 }
 
+
 async function submitScore() {
-  const name = document.getElementById("playerName").value.trim();
+  const name =
+    document.getElementById("playerName").value.trim();
 
   if (!name) {
     document.getElementById("msg").textContent =
       "You have won! Please enter a name for the leaderboard.";
+
     return;
   }
 
-  const twofaCode = localStorage.getItem("challenge_2fa_code");
+  /*
+   * Retrieve the 2FA code that was verified earlier.
+   */
+  const twofaCode =
+    localStorage.getItem("challenge_2fa_code");
 
   if (!twofaCode) {
     document.getElementById("msg").textContent =
       "2FA verification is required.";
+
     return;
   }
 
-  document.getElementById("msg").textContent = "Submitting...";
+  document.getElementById("msg").textContent =
+    "Submitting...";
 
   try {
     const res = await fetch(
@@ -213,44 +288,14 @@ async function submitScore() {
     const data = await res.json();
 
     if (data.success) {
-      // No longer needed after successful submission.
-      localStorage.removeItem("challenge_2fa_code");
 
-      document.getElementById("nameEntry").style.display = "none";
-      document.getElementById("msg").textContent =
-        "Challenge completed! You're on the leaderboard.";
-
-      loadLeaderboard();
-    } else {
-      document.getElementById("msg").textContent =
-        data.message || "Could not submit score.";
-    }
-  } catch (error) {
-    console.error(error);
-    document.getElementById("msg").textContent = "Connection error.";
-  }
-}
-
-  document.getElementById("msg").textContent =
-    "Submitting...";
-  try {
-    const res = await fetch(
-      "https://hashcheck.jamesxcarver.workers.dev/",
-      {
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-          type: "solve",
-          name: name
-        })
-      }
-    );
-    const data = await res.json();
-    if (data.success) {
+      /*
+       * The code is no longer needed after
+       * a successful submission.
+       */
+      localStorage.removeItem(
+        "challenge_2fa_code"
+      );
 
       document.getElementById("nameEntry").style.display =
         "none";
@@ -261,31 +306,34 @@ async function submitScore() {
       loadLeaderboard();
 
     } else {
-
       document.getElementById("msg").textContent =
         data.message || "Could not submit score.";
-
     }
 
   } catch (error) {
-
     console.error(error);
 
     document.getElementById("msg").textContent =
       "Connection error.";
-
   }
 }
+
+
 async function loadLeaderboard() {
   const leaderboardElement =
     document.getElementById("leaderboard");
+
   try {
     const res = await fetch(
       "https://hashcheck.jamesxcarver.workers.dev/leaderboard"
     );
+
     if (!res.ok) {
-      throw new Error("Failed to load leaderboard");
+      throw new Error(
+        "Failed to load leaderboard"
+      );
     }
+
     const leaderboard = await res.json();
 
     leaderboardElement.innerHTML = "";
@@ -295,28 +343,43 @@ async function loadLeaderboard() {
       leaderboard.length === 0
     ) {
       const li = document.createElement("li");
-      li.textContent =
-        "";
+
+      li.textContent = "";
+
       leaderboardElement.appendChild(li);
+
       return;
     }
+
     leaderboard.forEach(function(name) {
       const li = document.createElement("li");
+
       li.textContent = name;
+
       leaderboardElement.appendChild(li);
     });
+
   } catch (error) {
     console.error(error);
+
     leaderboardElement.innerHTML = "";
+
     const li = document.createElement("li");
+
     li.textContent =
       "Unable to load leaderboard.";
 
     leaderboardElement.appendChild(li);
   }
 }
+
+
 loadLeaderboard();
 </script>
+
 </div>
 </body>
 </html>
+
+
+So it matches a worker expecting data.code alongside data.name.
