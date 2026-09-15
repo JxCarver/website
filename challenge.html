@@ -112,7 +112,19 @@ function downloadEICAR() {
     <p id="msg"></p>
   </div>
 
-  <!-- LEADERBOARD -->
+<div id="stats-section">
+  <h2>Challenge Stats</h2>
+
+  <p>
+    Attempts: <span id="attempts">Loading...</span>
+  </p>
+
+  <p>
+    Solves: <span id="solves">Loading...</span>
+  </p>
+</div>
+
+       
   <div id="leaderboard-section">
     <h2>Leaderboard</h2>
 
@@ -124,7 +136,32 @@ function downloadEICAR() {
 
 <footer>
 </footer>
+<script> async function loadStats() {
+  try {
+    const res = await fetch(
+      "https://hashcheck.jamesxcarver.workers.dev/counter"
+    );
 
+    if (!res.ok) {
+      throw new Error("Failed to load stats");
+    }
+
+    const data = await res.json();
+
+    document.getElementById("attempts").textContent =
+      data.attempts ?? 0;
+
+    document.getElementById("solves").textContent =
+      data.solves ?? 0;
+
+  } catch (error) {
+    console.error(error);
+
+    document.getElementById("attempts").textContent = "?";
+    document.getElementById("solves").textContent = "?";
+  }
+}
+</script>
 <script>
 async function login() {
   const password =
@@ -367,7 +404,7 @@ async function loadLeaderboard() {
   }
 }
 
-
+loadstats();
 loadLeaderboard();
 </script>
 
