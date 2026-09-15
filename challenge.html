@@ -58,19 +58,18 @@ function downloadEICAR() {
 
     <h3>Do you accept this challenge?</h3>
 
-    <!-- ACCEPT BUTTON -->
     <button
       class="accept-button"
       id="accept"
       onclick="
         this.style.display='none';
         document.getElementById('login').style.display='block';
+           countup();
       "
     >
       Accept
     </button>
 
-    <!-- PASSWORD LOGIN -->
     <div id="login" style="display:none;">
       <input
         type="password"
@@ -81,7 +80,7 @@ function downloadEICAR() {
       <button onclick="login()">Login</button>
     </div>
 
-    <!-- 2FA -->
+
     <div id="twofa" style="display:none;">
       <input
         type="text"
@@ -103,7 +102,7 @@ function downloadEICAR() {
         type="text"
         id="playerName"
         placeholder="Your name"
-        maxlength="30"
+        maxlength="3"
       >
 
       <button onclick="submitScore()">Submit</button>
@@ -348,7 +347,21 @@ async function submitScore() {
   }
 }
 
-
+async function incrementCount() {
+        try {
+    const res = await fetch(
+      "https://hashcheck.jamesxcarver.workers.dev/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          type: "countup",
+        })
+      }
+    );
+}
 async function loadLeaderboard() {
   const leaderboardElement =
     document.getElementById("leaderboard");
