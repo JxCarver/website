@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+       <!DOCTYPE html>
 <html lang="en">
 <head>
   <title>J Carver</title>
@@ -193,6 +193,9 @@ async function verifyCode() {
   try {
     const res = await fetch(
       "https://hashcheck.jamesxcarver.workers.dev/",
+        /*
+   * Remember to close the endpoints!
+   */
       {
         method: "POST",
         headers: {
@@ -209,11 +212,7 @@ async function verifyCode() {
 
     if (data.success) {
 
-      /*
-       * Keep the successfully verified 2FA code locally.
-       * submitScore() will retrieve it when submitting
-       * the completed challenge.
-       */
+
       localStorage.setItem(
         "challenge_2fa_code",
         code
@@ -253,9 +252,7 @@ async function submitScore() {
     return;
   }
 
-  /*
-   * Retrieve the 2FA code that was verified earlier.
-   */
+
   const twofaCode =
     localStorage.getItem("challenge_2fa_code");
 
@@ -289,10 +286,7 @@ async function submitScore() {
 
     if (data.success) {
 
-      /*
-       * The code is no longer needed after
-       * a successful submission.
-       */
+
       localStorage.removeItem(
         "challenge_2fa_code"
       );
@@ -381,5 +375,3 @@ loadLeaderboard();
 </body>
 </html>
 
-
-So it matches a worker expecting data.code alongside data.name.
